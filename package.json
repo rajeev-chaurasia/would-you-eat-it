@@ -4,7 +4,8 @@
   "description": "Swipe-to-vote street food app — would you eat it?",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "node server/seed.js && node server/index.js",
+    "dev": "node server/index.js",
     "seed": "node server/seed.js"
   },
   "repository": {
