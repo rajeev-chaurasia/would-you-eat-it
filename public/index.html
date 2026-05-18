@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Swipe through 100+ street foods from around the world and vote. See global rankings.">
+  <title>Would You Eat It?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <section id="screen-swipe" class="screen active">
+    <header class="app-header">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        <span>Would You Eat It?</span>
+      </div>
+      <div class="progress" id="progress-text">...</div>
+    </header>
+
+    <div class="card-container">
+      <div class="card bg-card-placeholder"></div>
+      <div id="card" class="card">
+        <div class="loading-state" id="loading-state">
+          <div class="loading-spinner"></div>
+          <p>Loading foods...</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-wrapper">
+      <div class="controls">
+        <button id="btn-undo" class="btn-action btn-small-action" title="Undo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M3 10h10a5 5 0 015 5v2M3 10l5-5M3 10l5 5"/></svg>
+        </button>
+        <button id="btn-no" class="btn-vote btn-no" aria-label="No">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="28" height="28"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <button id="btn-yes" class="btn-vote btn-yes" aria-label="Yes">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </button>
+        <button id="btn-results-nav" class="btn-action btn-small-action" title="Results">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><rect x="4" y="14" width="4" height="6" rx="1"/><rect x="10" y="9" width="4" height="11" rx="1"/><rect x="16" y="4" width="4" height="16" rx="1"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="screen-results" class="screen">
+    <header class="app-header results-header">
+      <button id="btn-back-swipe" class="btn-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M15 18l-6-6 6-6"/></svg>
+        Back
+      </button>
+      <h1>Rankings</h1>
+      <button id="btn-matches-nav" class="btn-nav">
+        Matches
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </header>
+
+    <div class="stats-banner" id="global-stats-banner"></div>
+
+    <div class="filters">
+      <div class="filter-row">
+        <select id="sort-select" class="select-box">
+          <option value="popular">Most Loved</option>
+          <option value="hated">Most Hated</option>
+          <option value="divisive">Most Divisive</option>
+        </select>
+        <select id="region-select" class="select-box">
+          <option value="">All Regions</option>
+          <option value="East Asia">East Asia</option>
+          <option value="Southeast Asia">SE Asia</option>
+          <option value="South Asia">South Asia</option>
+          <option value="Middle East">Middle East</option>
+          <option value="Africa">Africa</option>
+          <option value="Europe">Europe</option>
+          <option value="Latin America">Latin America</option>
+          <option value="North America">N. America</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="results-list" class="results-list"></div>
+  </section>
+
+  <section id="screen-matches" class="screen">
+    <header class="app-header results-header">
+      <button id="btn-back-results" class="btn-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M15 18l-6-6 6-6"/></svg>
+        Results
+      </button>
+      <h1>Your Matches</h1>
+      <div style="width:80px"></div>
+    </header>
+
+    <div class="stats-banner">Foods you loved that the world agrees with (&gt;70% yes)</div>
+
+    <div id="matches-list" class="results-list"></div>
+  </section>
+
+  <section id="screen-complete" class="screen">
+    <div class="complete-content">
+      <div class="celebration-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="80" height="80"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
+      </div>
+      <h1>You've tasted the world!</h1>
+      <p id="user-stats">You voted on all foods.</p>
+      <button id="btn-see-results-final" class="btn-primary">See Global Results</button>
+    </div>
+  </section>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/swipe.js"></script>
+  <script src="/js/results.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
