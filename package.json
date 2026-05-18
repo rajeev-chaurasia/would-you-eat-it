@@ -1,0 +1,27 @@
+{
+  "name": "would-you-eat-it",
+  "version": "1.0.0",
+  "description": "Swipe-to-vote street food app — would you eat it?",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "seed": "node server/seed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rajeev-chaurasia/would-you-eat-it.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rajeev-chaurasia/would-you-eat-it/issues"
+  },
+  "homepage": "https://github.com/rajeev-chaurasia/would-you-eat-it#readme",
+  "dependencies": {
+    "better-sqlite3": "^12.10.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}
