@@ -318,7 +318,18 @@ body {
   border-color: rgba(248, 113, 113, 0.3);
 }
 
-.btn-no:hover, .btn-no:active {
+@media (hover: hover) {
+  .btn-no:hover {
+    background: var(--color-no-dim);
+    border-color: var(--color-no);
+  }
+  .btn-yes:hover {
+    background: var(--color-yes-dim);
+    border-color: var(--color-yes);
+  }
+}
+
+.btn-no:active {
   background: var(--color-no-dim);
   border-color: var(--color-no);
 }
@@ -328,7 +339,7 @@ body {
   border-color: rgba(52, 211, 153, 0.3);
 }
 
-.btn-yes:hover, .btn-yes:active {
+.btn-yes:active {
   background: var(--color-yes-dim);
   border-color: var(--color-yes);
 }
@@ -347,9 +358,11 @@ body {
   transition: all 0.2s ease;
 }
 
-.btn-small-action:hover {
-  background: rgba(255,255,255,0.1);
-  color: var(--text-primary);
+@media (hover: hover) {
+  .btn-small-action:hover {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-primary);
+  }
 }
 
 .btn-small-action:active { transform: scale(0.9); }
