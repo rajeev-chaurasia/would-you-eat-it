@@ -1,5 +1,7 @@
 'use strict';
 
+var MEDALS = ['medal-gold', 'medal-silver', 'medal-bronze'];
+
 async function loadResults() {
   var sort = document.getElementById('sort-select').value;
   var region = document.getElementById('region-select').value;
@@ -23,28 +25,48 @@ async function loadMatches() {
 }
 
 function renderResults(data) {
-  document.getElementById('global-stats-banner').textContent =
-    data.totalVotes + ' votes from ' + data.totalSessions + ' tasters worldwide';
+  var sortLabel = document.getElementById('sort-select').value;
+  var bannerText = data.totalVotes + ' votes from ' + data.totalSessions + ' tasters';
+  document.getElementById('global-stats-banner').textContent = bannerText;
 
   var list = document.getElementById('results-list');
   list.innerHTML = '';
 
+  if (data.results.length === 0) {
+    list.innerHTML = '<div class="empty-state">No votes yet. Start swiping to see global rankings!</div>';
+    return;
+  }
+
   data.results.forEach(function(item, index) {
     var percent = item.totalVotes > 0 ? Math.round(item.yesPercent) : 0;
+    var medalClass = index < 3 ? MEDALS[index] : '';
+    var rankLabel = index < 3 ? '' : '#' + (index + 1);
+
     var div = document.createElement('div');
-    div.className = 'result-item';
+    div.className = 'result-item' + (medalClass ? ' ' + medalClass : '');
+
+    var medalIcon = '';
+    if (index === 0) medalIcon = '<div class="rank-badge rank-gold">1</div>';
+    else if (index === 1) medalIcon = '<div class="rank-badge rank-silver">2</div>';
+    else if (index === 2) medalIcon = '<div class="rank-badge rank-bronze">3</div>';
+    else medalIcon = '<div class="rank-badge">' + (index + 1) + '</div>';
+
     div.innerHTML =
+      medalIcon +
       '<img src="' + item.imageUrl + '" class="result-img" alt="' + item.name + '">' +
       '<div class="result-info">' +
-        '<div class="result-title">#' + (index + 1) + ' ' + item.name + '</div>' +
+        '<div class="result-title">' + item.name + '</div>' +
         '<div class="result-country">' + item.country + '</div>' +
-        '<div class="result-meta">' +
-          '<span>' + percent + '% YES</span>' +
-          '<span>' + item.totalVotes + ' votes</span>' +
+        '<div class="result-bar-row">' +
+          '<div class="bar-container">' +
+            '<div class="bar-yes" style="width:' + percent + '%"></div>' +
+          '</div>' +
+          '<span class="result-pct">' + percent + '%</span>' +
         '</div>' +
-        '<div class="bar-container">' +
-          '<div class="bar-yes" style="width:' + percent + '%"></div>' +
-          '<div class="bar-no" style="width:' + (100 - percent) + '%"></div>' +
+        '<div class="result-meta">' +
+          '<span class="meta-yes">' + (item.yesCount || 0) + ' yes</span>' +
+          '<span class="meta-no">' + (item.noCount || 0) + ' no</span>' +
+          '<span>' + item.totalVotes + ' total</span>' +
         '</div>' +
       '</div>';
     list.appendChild(div);
@@ -56,20 +78,25 @@ function renderMatches(matches) {
   list.innerHTML = '';
 
   if (matches.length === 0) {
-    list.innerHTML = '<div class="empty-state">No matches yet. Swipe YES on foods you love to find global taste matches!</div>';
+    list.innerHTML = '<div class="empty-state">No matches yet. Swipe YES on foods you love to find what the world agrees on!</div>';
     return;
   }
 
   matches.forEach(function(item) {
     var percent = Math.round(item.yesPercent);
     var div = document.createElement('div');
-    div.className = 'result-item';
+    div.className = 'result-item match-item';
     div.innerHTML =
       '<img src="' + item.imageUrl + '" class="result-img" alt="' + item.name + '">' +
       '<div class="result-info">' +
         '<div class="result-title">' + item.name + '</div>' +
         '<div class="result-country">' + item.country + '</div>' +
-        '<div class="result-meta"><span>Global: ' + percent + '% YES</span></div>' +
+        '<div class="result-bar-row">' +
+          '<div class="bar-container">' +
+            '<div class="bar-yes" style="width:' + percent + '%"></div>' +
+          '</div>' +
+          '<span class="result-pct match-pct">' + percent + '%</span>' +
+        '</div>' +
       '</div>';
     list.appendChild(div);
   });

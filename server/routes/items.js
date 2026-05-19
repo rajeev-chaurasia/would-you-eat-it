@@ -6,18 +6,20 @@ router.get('/items', (req, res) => {
   const { sessionId } = req.query;
 
   try {
-    const selectCols = 'id, name, country, region, description, image_url AS imageUrl';
-    let items;
+    const query = `
+      SELECT f.id, f.name, f.country, f.region, f.description,
+        f.image_url AS imageUrl,
+        COALESCE(SUM(CASE WHEN v.vote = 'yes' THEN 1 ELSE 0 END), 0) AS yesCount,
+        COALESCE(SUM(CASE WHEN v.vote = 'no' THEN 1 ELSE 0 END), 0) AS noCount,
+        COUNT(v.id) AS totalVotes
+      FROM items f
+      LEFT JOIN votes v ON f.id = v.item_id
+      ${sessionId ? 'WHERE f.id NOT IN (SELECT item_id FROM votes WHERE session_id = ?)' : ''}
+      GROUP BY f.id
+      ORDER BY RANDOM()
+    `;
 
-    if (!sessionId) {
-      items = db.prepare(`SELECT ${selectCols} FROM items`).all();
-    } else {
-      items = db.prepare(`
-        SELECT ${selectCols} FROM items
-        WHERE id NOT IN (SELECT item_id FROM votes WHERE session_id = ?)
-      `).all(sessionId);
-    }
-
+    const items = sessionId ? db.prepare(query).all(sessionId) : db.prepare(query).all();
     const totalCount = db.prepare('SELECT COUNT(*) as count FROM items').get().count;
 
     res.json({

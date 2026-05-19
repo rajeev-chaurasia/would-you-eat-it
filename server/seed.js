@@ -9,26 +9,27 @@ const ITEMS = RAW_DATA.map(([id, name, country, region, description, imageUrl]) 
 }));
 
 function seedDatabase() {
+  const existing = db.prepare('SELECT COUNT(*) as count FROM items').get().count;
+
+  if (existing >= ITEMS.length) {
+    console.log('Database already seeded (' + existing + ' items). Skipping.');
+    return;
+  }
+
   console.log('Seeding database...');
 
-  const insert = db.prepare(
-    'INSERT INTO items (id, name, country, region, description, image_url) VALUES (?, ?, ?, ?, ?, ?)'
+  const upsert = db.prepare(
+    'INSERT OR REPLACE INTO items (id, name, country, region, description, image_url) VALUES (?, ?, ?, ?, ?, ?)'
   );
 
-  const insertMany = db.transaction((items) => {
+  const upsertMany = db.transaction((items) => {
     for (const item of items) {
-      insert.run(item.id, item.name, item.country, item.region, item.description, item.imageUrl);
+      upsert.run(item.id, item.name, item.country, item.region, item.description, item.imageUrl);
     }
   });
 
-  try {
-    db.exec('DELETE FROM votes');
-    db.exec('DELETE FROM items');
-    insertMany(ITEMS);
-    console.log(`Seeded ${ITEMS.length} items successfully.`);
-  } catch (err) {
-    console.error('Failed to seed database:', err);
-  }
+  upsertMany(ITEMS);
+  console.log('Seeded ' + ITEMS.length + ' items successfully.');
 }
 
 seedDatabase();
