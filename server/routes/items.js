@@ -9,8 +9,8 @@ router.get('/items', (req, res) => {
     const query = `
       SELECT f.id, f.name, f.country, f.region, f.description,
         f.image_url AS imageUrl,
-        COALESCE(SUM(CASE WHEN v.vote = 'yes' THEN 1 ELSE 0 END), 0) AS yesCount,
-        COALESCE(SUM(CASE WHEN v.vote = 'no' THEN 1 ELSE 0 END), 0) AS noCount,
+        COALESCE(SUM(CASE WHEN v.choice = 'yes' THEN 1 ELSE 0 END), 0) AS yesCount,
+        COALESCE(SUM(CASE WHEN v.choice = 'no' THEN 1 ELSE 0 END), 0) AS noCount,
         COUNT(v.id) AS totalVotes
       FROM items f
       LEFT JOIN votes v ON f.id = v.item_id
