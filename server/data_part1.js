@@ -6,7 +6,7 @@ module.exports = [
 [4,"Arepas","Colombia","Latin America","Golden cornmeal cakes stuffed with cheese, beans & avocado","https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=800&q=80"],
 [5,"Tacos al Pastor","Mexico","Latin America","Spit-roasted pork tacos topped with pineapple & cilantro","https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=800&q=80"],
 [6,"Currywurst","Germany","Europe","Sliced pork sausage smothered in curried ketchup & dusted with spice","https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&q=80"],
-[7,"Pani Puri","India","South Asia","Hollow crispy puffs filled with tangy tamarind water & chickpeas","https://images.unsplash.com/photo-1613490900233-141c5560d75d?w=800&q=80"],
+[7,"Pani Puri","India","South Asia","Hollow crispy puffs filled with tangy tamarind water & chickpeas","https://images.unsplash.com/photo-1586357507341-3fbe59f2a5d9?w=800&q=80"],
 [8,"Shawarma","Lebanon","Middle East","Thinly shaved roasted meat wrapped in warm pita with garlic sauce","https://images.unsplash.com/photo-1481070414801-51fd732d7184?w=800&q=80"],
 [9,"Churros","Spain","Europe","Crispy fried dough sticks dusted in cinnamon sugar with chocolate dip","https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=800&q=80"],
 [10,"Empanadas","Argentina","Latin America","Golden baked pastries filled with spiced ground beef & olives","https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=800&q=80"],
@@ -48,6 +48,6 @@ module.exports = [
 [46,"Momos","Nepal","South Asia","Steamed Himalayan dumplings filled with spiced meat & vegetables","https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=800&q=80"],
 [47,"Kottu Roti","Sri Lanka","South Asia","Chopped roti stir-fried with egg, vegetables & spicy curry sauce","https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80"],
 [48,"Pav Bhaji","India","South Asia","Buttery bread rolls served with thick spiced vegetable mash","https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80"],
-[49,"Chaat","India","South Asia","Tangy, crunchy snack mix with yogurt, tamarind & fresh herbs","https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&q=80"],
+[49,"Chaat","India","South Asia","Tangy, crunchy snack mix with yogurt, tamarind & fresh herbs","https://images.unsplash.com/photo-1653850280260-aa3b9e00b230?w=800&q=80"],
 [50,"Egg Hoppers","Sri Lanka","South Asia","Bowl-shaped rice flour pancake cradling a soft-cooked egg","https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&q=80"],
 ];
