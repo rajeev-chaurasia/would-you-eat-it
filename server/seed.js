@@ -9,18 +9,19 @@ const ITEMS = RAW_DATA.map(([id, name, country, region, description, imageUrl]) 
 }));
 
 function seedDatabase() {
-  const existing = db.prepare('SELECT COUNT(*) as count FROM items').get().count;
+  console.log('Syncing items to database...');
 
-  if (existing >= ITEMS.length) {
-    console.log('Database already seeded (' + existing + ' items). Skipping.');
-    return;
-  }
-
-  console.log('Seeding database...');
-
-  const upsert = db.prepare(
-    'INSERT OR REPLACE INTO items (id, name, country, region, description, image_url) VALUES (?, ?, ?, ?, ?, ?)'
-  );
+  // Use UPSERT so we update existing items (like new image URLs) without deleting rows and breaking foreign keys
+  const upsert = db.prepare(`
+    INSERT INTO items (id, name, country, region, description, image_url) 
+    VALUES (?, ?, ?, ?, ?, ?)
+    ON CONFLICT(id) DO UPDATE SET
+      name=excluded.name,
+      country=excluded.country,
+      region=excluded.region,
+      description=excluded.description,
+      image_url=excluded.image_url
+  `);
 
   const upsertMany = db.transaction((items) => {
     for (const item of items) {
@@ -29,7 +30,7 @@ function seedDatabase() {
   });
 
   upsertMany(ITEMS);
-  console.log('Seeded ' + ITEMS.length + ' items successfully.');
+  console.log('Synced ' + ITEMS.length + ' items successfully.');
 }
 
 seedDatabase();
