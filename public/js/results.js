@@ -1,15 +1,36 @@
 'use strict';
 
 var MEDALS = ['medal-gold', 'medal-silver', 'medal-bronze'];
+var pollingInterval = null;
 
-async function loadResults() {
+function startPolling() {
+  stopPolling();
+  pollingInterval = setInterval(function() {
+    if (document.getElementById('screen-results').classList.contains('active')) {
+      loadResults(true);
+    } else {
+      stopPolling();
+    }
+  }, 5000);
+}
+
+function stopPolling() {
+  if (pollingInterval) {
+    clearInterval(pollingInterval);
+    pollingInterval = null;
+  }
+}
+
+async function loadResults(silent) {
   var sort = document.getElementById('sort-select').value;
   var region = document.getElementById('region-select').value;
   var regionParam = region ? '&region=' + encodeURIComponent(region) : '';
 
   try {
     var data = await api('GET', '/results?sort=' + sort + regionParam);
-    renderResults(data);
+    var analytics = await api('GET', '/analytics');
+    renderResults(data, analytics);
+    if (!silent) startPolling();
   } catch (err) {
     console.error(err);
   }
@@ -24,10 +45,16 @@ async function loadMatches() {
   }
 }
 
-function renderResults(data) {
-  var sortLabel = document.getElementById('sort-select').value;
+function renderResults(data, analytics) {
+  var banner = document.getElementById('global-stats-banner');
   var bannerText = data.totalVotes + ' votes from ' + data.totalSessions + ' tasters';
-  document.getElementById('global-stats-banner').textContent = bannerText;
+  if (analytics && analytics.totalSwipes > 0) {
+    bannerText += '  |  ' + analytics.globalYesRate + '% global yes rate';
+    if (analytics.avgDecisionTimeSec > 0) {
+      bannerText += '  |  ' + analytics.avgDecisionTimeSec + 's avg decision';
+    }
+  }
+  banner.textContent = bannerText;
 
   var list = document.getElementById('results-list');
   list.innerHTML = '';

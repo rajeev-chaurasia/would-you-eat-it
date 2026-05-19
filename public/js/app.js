@@ -33,7 +33,7 @@ async function initApp() {
       loadResults();
       showScreen('results');
     });
-    document.getElementById('btn-back-swipe').addEventListener('click', function() { showScreen('swipe'); });
+    document.getElementById('btn-back-swipe').addEventListener('click', function() { stopPolling(); showScreen('swipe'); });
     document.getElementById('btn-matches-nav').addEventListener('click', function() {
       loadMatches();
       showScreen('matches');
@@ -94,6 +94,7 @@ function renderCurrentCard() {
   card.style.transition = 'none';
   card.style.transform = '';
   card.style.opacity = 1;
+  state.cardShownAt = Date.now();
 
   card.innerHTML =
     '<img src="' + item.imageUrl + '" class="card-img" alt="' + item.name + '">' +

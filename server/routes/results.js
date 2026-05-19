@@ -100,4 +100,28 @@ router.get('/stats', (req, res) => {
   }
 });
 
+router.get('/analytics', (req, res) => {
+  try {
+    const stats = db.prepare(`
+      SELECT
+        COUNT(*) as totalSwipes,
+        COUNT(DISTINCT session_id) as uniqueSessions,
+        COALESCE(AVG(CASE WHEN decision_time_ms > 0 THEN decision_time_ms END), 0) as avgDecisionTimeMs,
+        COALESCE(SUM(CASE WHEN choice = 'yes' THEN 1 ELSE 0 END), 0) as totalYes,
+        COALESCE(SUM(CASE WHEN choice = 'no' THEN 1 ELSE 0 END), 0) as totalNo
+      FROM votes
+    `).get();
+
+    res.json({
+      totalSwipes: stats.totalSwipes,
+      uniqueSessions: stats.uniqueSessions,
+      avgDecisionTimeSec: Math.round((stats.avgDecisionTimeMs || 0) / 100) / 10,
+      globalYesRate: stats.totalSwipes > 0 ? Math.round((stats.totalYes / stats.totalSwipes) * 100) : 0
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to fetch analytics' });
+  }
+});
+
 module.exports = router;

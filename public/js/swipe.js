@@ -74,19 +74,21 @@ async function onDragEnd() {
 async function handleVote(choice, direction) {
   if (state.currentIndex >= state.items.length) return;
 
-  const currentItem = state.items[state.currentIndex];
-  const card = document.getElementById('card');
+  var currentItem = state.items[state.currentIndex];
+  var decisionTimeMs = state.cardShownAt ? Date.now() - state.cardShownAt : 0;
+  var card = document.getElementById('card');
 
-  const xOffset = direction === 'right' ? window.innerWidth : -window.innerWidth;
+  var xOffset = direction === 'right' ? window.innerWidth : -window.innerWidth;
   card.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
-  card.style.transform = `translateX(${xOffset}px) rotate(${direction === 'right' ? 20 : -20}deg)`;
+  card.style.transform = 'translateX(' + xOffset + 'px) rotate(' + (direction === 'right' ? 20 : -20) + 'deg)';
   card.style.opacity = 0;
 
   try {
-    const res = await api('POST', '/vote', {
+    var res = await api('POST', '/vote', {
       itemId: currentItem.id,
-      choice,
+      choice: choice,
       sessionId: state.sessionId,
+      decisionTimeMs: decisionTimeMs,
     });
 
     state.currentIndex++;

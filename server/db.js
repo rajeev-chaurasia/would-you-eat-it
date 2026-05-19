@@ -29,6 +29,7 @@ const initSchema = () => {
       session_id TEXT NOT NULL,
       item_id INTEGER NOT NULL,
       choice TEXT NOT NULL CHECK(choice IN ('yes', 'no')),
+      decision_time_ms INTEGER DEFAULT 0,
       voted_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       UNIQUE(session_id, item_id),
       FOREIGN KEY(item_id) REFERENCES items(id)

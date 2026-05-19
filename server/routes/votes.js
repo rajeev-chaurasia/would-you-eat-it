@@ -4,13 +4,14 @@ const { validateVotePayload, validateUndoPayload } = require('../middleware');
 const router = express.Router();
 
 router.post('/vote', validateVotePayload, (req, res) => {
-  const { itemId, choice, sessionId } = req.body;
+  const { itemId, choice, sessionId, decisionTimeMs } = req.body;
+  const timeMs = Number(decisionTimeMs) || 0;
 
   try {
     db.prepare(`
-      INSERT OR REPLACE INTO votes (session_id, item_id, choice)
-      VALUES (?, ?, ?)
-    `).run(sessionId, itemId, choice);
+      INSERT OR REPLACE INTO votes (session_id, item_id, choice, decision_time_ms)
+      VALUES (?, ?, ?, ?)
+    `).run(sessionId, itemId, choice, timeMs);
 
     const remainingCount = db.prepare(`
       SELECT COUNT(*) as count FROM items
