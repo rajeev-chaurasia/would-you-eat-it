@@ -1,7 +1,7 @@
 // All photo IDs verified 200 — [id, name, country, region, desc, imageUrl]
 module.exports = [
 [1,"Pad Thai","Thailand","Southeast Asia","Stir-fried rice noodles with shrimp, peanuts & tamarind","https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&q=80"],
-[2,"Takoyaki","Japan","East Asia","Crispy octopus-filled batter balls drizzled with savory sauce","https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&q=80"],
+[2,"Takoyaki","Japan","East Asia","Crispy octopus-filled batter balls drizzled with savory sauce","https://images.unsplash.com/photo-1738681335816-8e0df0aa9824?w=800&q=80"],
 [3,"Banh Mi","Vietnam","Southeast Asia","Crispy baguette stuffed with pork, pate & pickled vegetables","https://images.unsplash.com/photo-1509722747041-616f39b57569?w=800&q=80"],
 [4,"Arepas","Colombia","Latin America","Golden cornmeal cakes stuffed with cheese, beans & avocado","https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=800&q=80"],
 [5,"Tacos al Pastor","Mexico","Latin America","Spit-roasted pork tacos topped with pineapple & cilantro","https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=800&q=80"],
@@ -13,7 +13,7 @@ module.exports = [
 [11,"Char Siu Bao","China","East Asia","Fluffy steamed buns filled with sweet barbecue pork","https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=800&q=80"],
 [12,"Poutine","Canada","North America","Crispy fries loaded with cheese curds & rich brown gravy","https://images.unsplash.com/photo-1586805608485-add336722759?w=800&q=80"],
 [13,"Satay","Indonesia","Southeast Asia","Charcoal-grilled meat skewers served with creamy peanut sauce","https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80"],
-[14,"Falafel","Egypt","Middle East","Deep-fried chickpea fritters served in pita with tahini sauce","https://images.unsplash.com/photo-1506354666786-959d6d497f1a?w=800&q=80"],
+[14,"Falafel","Egypt","Middle East","Deep-fried chickpea fritters served in pita with tahini sauce","https://images.unsplash.com/photo-1680990999782-ba7fe26e4d0b?w=800&q=80"],
 [15,"Samosa","India","South Asia","Crispy triangular pastry stuffed with spiced potato & peas","https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&q=80"],
 [16,"Crepes","France","Europe","Paper-thin pancakes folded with Nutella, strawberries & cream","https://images.unsplash.com/photo-1519676867240-f03562e64548?w=800&q=80"],
 [17,"Bunny Chow","South Africa","Africa","Hollowed-out bread loaf overflowing with fragrant lamb curry","https://images.unsplash.com/photo-1547592180-85f173990554?w=800&q=80"],
